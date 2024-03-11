@@ -1,5 +1,6 @@
-import blessed from 'blessed'
-import contrib from 'blessed-contrib'
+import blessed from 'blessed';
+import contrib from 'blessed-contrib';
+// import "../../../scripts/consoleToFile.js";
 
 export default class LayoutBuilder {
     #screen
@@ -51,8 +52,6 @@ export default class LayoutBuilder {
         input.key('enter', onSearch(input))
         this.#input = input
 
-        this.#input.focus()
-
         return this
     }
 
@@ -63,10 +62,6 @@ export default class LayoutBuilder {
         })
 
         this.#screen.key(['escape', 'q', 'C-c'], () => process.exit(0))
-
-        this.#screen.key('1', function() { 
-            console.log("1")
-        })
 
         return this
     }
@@ -99,22 +94,40 @@ export default class LayoutBuilder {
         return this
     }
 
-    setMenu(onSearch, onCreate, onRemove, onUpdate) {
+    setMenu(onRemove) {
         const menu = blessed.listbar(
             {
                 parent: this.#table,
-                items: ["search", "add", "remove", "update"],
                 clickable: true,
                 mouse: true,
                 keys: true,
                 shrink: true,
                 bottom: 0,
                 left: 0,
+                commands: {
+                    "search": {
+                        "keys": "s"
+                    },
+                    "delete": {
+                        "keys": "d"
+                    },
+                    "quit": {
+                        "keys": ["escape"]
+                    }
+                }
             }
         )
 
-        menu.key('enter', function() { 
-            this.setSearchComponent(onSearch)
+        const input = this.#input
+        this.#screen.key('s', function() { 
+            input.focus()
+        })
+
+        const table = this.#table
+        this.#screen.key('d', function() {
+            const item = table.rows.ritems[table.rows.selected];
+            const userData = item.replaceAll(/( {6,})/g, "_").split("_")
+            onRemove(userData[0])
         })
 
         this.#menu = menu
@@ -130,7 +143,6 @@ export default class LayoutBuilder {
             menu: this.#menu,
         }
 
-        // this.#input.focus()
         this.#table.focus()
         this.#screen.render()
 

@@ -11,7 +11,8 @@
   "version": "0.0.1",
   "main": "api.js",
   "scripts": {
-    "start": "node --experimental-vm-modules --watch api.js"
+    "start": "node --experimental-vm-modules --watch api.js",
+    "test:e2e": "node --test --experimental-vm-modules --watch test/e2e"
   },
   "keywords": [],
   "author": "",

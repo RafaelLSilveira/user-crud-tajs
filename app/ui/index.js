@@ -26,7 +26,4 @@ const deps = {
     service: new Service({ url }),
 }
 
-const onRemove = () => {
-    console.warn("RMEOVEEE")
-}
 perf.measureTime(Controller.init)(deps)

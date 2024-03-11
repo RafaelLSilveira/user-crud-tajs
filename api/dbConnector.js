@@ -72,13 +72,11 @@ export async function updateUser(userId, data) {
   }
 }
 
-
 export async function deleteUser(userId) {
   const { db } = await openDb();
   try {    
     const deleteQuery = `
-      DELETE FROM users
-      WHERE id=${userId}
+      DELETE FROM users WHERE id=${userId}
     `;
     db.run(
       deleteQuery,

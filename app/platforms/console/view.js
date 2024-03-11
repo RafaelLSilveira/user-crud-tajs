@@ -8,13 +8,19 @@ export default class View {
 
     #onSearch = () => { }
     #onRemove = function(){}
-    #onCreate = function(){}
-    #onUpdate = async function(){}
-    #onGetById = async function(){}
 
     constructor() { }
 
     configureOnClearClick(onClear) {
+    }
+
+    configureOnCreateClick(onCreate) {
+    }
+
+    configureOnUpdateClick(onUpdate) {
+    }
+
+    configureOnGetByIdClick(onGetById) {
     }
 
     configureOnSearchClick(onSearch) {
@@ -30,18 +36,6 @@ export default class View {
 
     configureOnRemoveClick(onRemove) {
         this.#onRemove = onRemove
-    }
-
-    configureOnCreateClick(onCreate) {
-        this.#onCreate = onCreate
-    }
-
-    configureOnUpdateClick(onUpdate) {
-        this.#onUpdate = onUpdate
-    }
-
-    configureOnGetByIdClick(onGetById) {
-        this.#onGetById = onGetById
     }
 
     #prepareData(data) {
@@ -94,9 +88,10 @@ export default class View {
         this.#components = layout
             .setScreen({ title: 'Design Patterns with Erick Wendel and Rafael Silveira' })
             .setLayoutComponent()
-            // .setSearchComponent(this.#onSearch)
+            .setSearchComponent(this.#onSearch)
             .setTable(template)
-            .setMenu(this.#onSearch, this.#onCreate, this.#onRemove, this.#onUpdate)
+            .setMenu(this.#onRemove)
+            .setCreateComponents()
             .build()
 
         this.#firstRender = false

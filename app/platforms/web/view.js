@@ -8,7 +8,7 @@ export default class View {
     #firstRender = true
 
     #onRemove = function(){}
-    #onCreate = function(){}
+    #onCreate = async function(){}
     #onUpdate = async function(){}
     #onGetById = async function(){}
 
@@ -47,6 +47,7 @@ export default class View {
         return  `
             <div id="create-modal" class="d-flex flex-column gap-2">
                 <p class="font-weight-bold">${data?.id ? `Editando usuário <b>${data?.name}</b>` : "Cadastro de usuário"}</p>
+                <input type="hidden" id="user-id" name="new-name" ${data?.id && `value="${data?.id}"`}>
                 <input type="text" class="form-control" aria-label="Default" id="new-name" name="new-name" placeholder="Type user name" ${data?.name && `value="${data?.name}"`}>
                 <input type="number" class="form-control" aria-label="Default" id="new-age" name="new-age" placeholder="Type user age" ${data?.age && `value="${data?.age}"`}>
                 <input type="mail" class="form-control" aria-label="Default" id="new-email" name="new-email" placeholder="Type user email" ${data?.email && `value="${data?.email}"`}>
@@ -77,7 +78,7 @@ export default class View {
             })
     
             const onCreate = this.#onCreate
-            document.querySelector("#btnSubmit").addEventListener("click", function(event) {
+            document.querySelector("#btnSubmit").addEventListener("click", async function(event) {
                 event.preventDefault()
                 event.stopPropagation()
         
@@ -94,7 +95,12 @@ export default class View {
                     phone,
                     vehicle
                 }
-                onCreate(data)
+                const response = await onCreate(data)
+                if(response?.status === 200) {
+                    createModal.classList.add("d-none")
+                } else {
+                  console.error("Ocorreu um erro ao tentar criar usuário!")
+                }   
             })
 
             createModal.classList.remove("d-none")
@@ -160,31 +166,32 @@ export default class View {
                     })
 
                     const onUpdate = this.#onUpdate
-                        document.querySelector("#btnSubmit").addEventListener("click", async function(event) {
-                            event.preventDefault()
-                            event.stopPropagation()
-                    
-                            const name = document.getElementById("new-name").value
-                            const age = document.getElementById("new-age").value
-                            const email = document.getElementById("new-email").value
-                            const phone = document.getElementById("new-phone").value
-                            const vehicle = document.getElementById("new-vehicle").value
-                            
-                            const data = {
-                                id: userId,
-                                name,
-                                age,
-                                email,
-                                phone,
-                                vehicle
-                            }
-                          const response = await onUpdate(data)
-
-                          if(response?.status === 200) {
+                    document.querySelector("#btnSubmit").addEventListener("click", async function(event) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                
+                        const name = document.getElementById("new-name").value
+                        const age = document.getElementById("new-age").value
+                        const email = document.getElementById("new-email").value
+                        const phone = document.getElementById("new-phone").value
+                        const vehicle = document.getElementById("new-vehicle").value
+                        const id = document.getElementById("user-id").value
+                        
+                        const data = {
+                            id,
+                            name,
+                            age,
+                            email,
+                            phone,
+                            vehicle
+                        }
+                        
+                        const response = await onUpdate(data)
+                        if(response?.status === 200) {
                             createModal.classList.add("d-none")
-                          } else {
+                        } else {
                             console.error("Ocorreu um erro ao tentar atualizar usuário!")
-                          }
+                        }
                     })
 
                     createModal.classList.remove("d-none")

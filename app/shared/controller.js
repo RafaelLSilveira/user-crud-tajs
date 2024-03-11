@@ -31,6 +31,8 @@ export default class Controller {
         if(response?.status === 200) {
             this.#init()
         }
+        
+        return response
     }
 
     async #onUpdate(data) {

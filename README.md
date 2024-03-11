@@ -15,7 +15,7 @@ cd app
 npm ci --silent
 ```
 
-Agor, você poderá escolher entre executar a aplicação  `web` or `cli`. Siga os passos abaixo para selecioná-las:
+Agora, você poderá escolher entre executar a aplicação  `web` or `cli`. Siga os passos abaixo para selecioná-las:
 
 ### Web
 ```sh
@@ -43,9 +43,9 @@ npm run test:watch
 ## Checklist Desafio
 
 - [x] - Adicionar banco de dados para API
-- [] - Testes e2e para toda a UI na Web
+- [x] - Testes e2e para toda a UI na Web
 - [] - Testes e2e para toda a UI na CLI
-- [] - Testes e2e para toda a API
+- [x] - Testes e2e para toda a API
 - [] - Testes unitários com 100% de code coverage
 
 ### Plus

@@ -9,6 +9,9 @@
 # testing
 /coverage
 
+# log
+*.log
+
 # production
 /build
 
