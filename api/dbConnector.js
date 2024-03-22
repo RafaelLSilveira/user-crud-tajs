@@ -1,32 +1,24 @@
 import { open } from 'sqlite';
 import sqlite3 from 'sqlite3';
 
+const { isTEST } = process.env
+
 async function openDb () {
   sqlite3.verbose();
   const db = await open({
-    filename: 'database/projeto_final.sqlite3',
+    filename: isTEST ? 'database/db_test.sqlite3' : 'database/projeto_final.sqlite3',
     driver: sqlite3.Database,
   });
 
-    db.db.run(`
-    CREATE TABLE IF NOT EXISTS users(
-      "id" INTEGER PRIMARY KEY,
-      "name" TEXT,
-      "age" INTEGER,
-      "email" TEXT,
-      "phone" TEXT,
-      "vehicle" TEXT
-    )
-  `);
-
   return db;
 }
+
 
 export async function insertUser(data) {
   const { db } = await openDb();
   try {    
     const { name, age, email, phone, vehicle } = data;
-    const insertQuery = `INSERT INTO users (name, age, email, phone, vehicle) VALUES (?, ?, ?, ?, ?)`;
+    const insertQuery = `INSERT OR IGNORE INTO users (name, age, email, phone, vehicle) VALUES (?, ?, ?, ?, ?)`;
     db.run(
       insertQuery,
       [`${name}`, age, `${email}`, `${phone}`, `${vehicle}`],
@@ -42,6 +34,43 @@ export async function insertUser(data) {
     console.error("SLQLite Insert Error: ", error);
   } finally {
     db.close();
+  }
+}
+
+
+export async function initializeDb() {
+  const { db } = await openDb();
+
+  db.run(`
+    CREATE TABLE IF NOT EXISTS users(
+      "id" INTEGER PRIMARY KEY,
+      "name" TEXT,
+      "age" INTEGER,
+      "email" TEXT,
+      "phone" TEXT,
+      "vehicle" TEXT
+    )
+  `);
+
+  if(isTEST) {
+    const user = {
+      "name": "Peter Parker",
+      "age": 20,
+      "email": "spider-man@gmail.com",
+      "phone": "(55) 9999-1111",
+      "vehicle": "Motoneta"
+    }
+
+    const secondUser = {
+      "name": "Bruce Wayne",
+      "age": 30,
+      "email": "batman-man@gmail.com",
+      "phone": "(55) 9989-1111",
+      "vehicle": "Batmovel"
+    }
+
+    await insertUser(user)
+    await insertUser(secondUser)
   }
 }
 

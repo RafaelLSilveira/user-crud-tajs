@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "cross-env": "^7.0.3",
     "sqlite": "^5.1.1",
     "sqlite3": "^5.1.7"
   },
@@ -12,6 +13,7 @@
   "main": "api.js",
   "scripts": {
     "start": "node --experimental-vm-modules --watch api.js",
+    "start:test": "npx cross-env isTEST=true node --experimental-vm-modules api.js",
     "test:e2e": "node --test --experimental-vm-modules --watch test/e2e"
   },
   "keywords": [],

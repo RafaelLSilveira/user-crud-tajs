@@ -23,9 +23,8 @@ export default class Service {
             const reader = response.body
             .pipeThrough(
                 new TextDecoderStream()
-                )
-                .getReader()
-                
+            )
+            .getReader()
             for await (const chunk of this.#readChunks(reader)) {
                 const item = JSON.parse(chunk)
                 this.#database = item;

@@ -1,7 +1,7 @@
 import { once } from 'node:events'
 import { createServer } from 'node:http'
 import querystring from 'node:querystring'
-import { deleteUser, getUsers, insertUser, updateUser } from './dbConnector.js'
+import { deleteUser, getUsers, initializeDb, insertUser, updateUser } from './dbConnector.js'
 
 
 const PORT = 3000
@@ -129,8 +129,11 @@ const api = createServer(async (req, res) => {
     }
 
     return possibleRoutes(req, res)
-}).listen(PORT, () => 
-    console.log(`Server is running at http://localhost:${PORT}`)
+}).listen(PORT, async () =>  {
+        // initialize DB
+        await initializeDb()
+        console.log(`Server is running at http://localhost:${PORT}`)
+    }
 )
 
 export { api }

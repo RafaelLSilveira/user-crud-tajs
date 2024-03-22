@@ -1,3 +1,4 @@
+import ansiRegex from "ansi-regex"
 import LayoutBuilder from "./layoutBuilder.js"
 
 export default class View {
@@ -10,6 +11,10 @@ export default class View {
     #onRemove = function(){}
 
     constructor() { }
+
+    getTableSnapshot() {
+        return this.#components.table.screenshot().replace(ansiRegex(), '');
+    }
 
     configureOnClearClick(onClear) {
     }
@@ -91,7 +96,6 @@ export default class View {
             .setSearchComponent(this.#onSearch)
             .setTable(template)
             .setMenu(this.#onRemove)
-            .setCreateComponents()
             .build()
 
         this.#firstRender = false

@@ -7,15 +7,17 @@
     "web": "npx browser-sync .",
     "web:test:env": "npx browser-sync . -w --server public --no-open --port 3300 --logLevel silent",
     "cli": "node ui/index.js",
-    "api": "npm --prefix ../api run start",
-    "test": "node --test test",
-    "test:watch": "node --watch --test test",
-    "test:debug": "node --experimental-vm-modules --inspect-brk node_modules/.bin/jest --runInBand --watchAll test/",
-    "test:coverage": "node --test --experimental-test-coverage --test-reporter=lcov --test-reporter-destination=lcov.info test/",
+    "api": "npm --prefix ../api run start:test",
+    "test": "node --test test/unit",
+    "test:e2e": "cross-env NODE_OPTIONS=\"$NODE_OPTIONS --experimental-vm-modules\"  npx jest --runInBand test/e2e",
+    "test:watch": "node --watch --test test/unit",
+    "test:debug": "node --experimental-vm-modules --inspect-brk node_modules/.bin/jest --runInBand --watchAll test/unit",
+    "test:coverage": "node --test --experimental-test-coverage --test-reporter=lcov --test-reporter-destination=lcov.info test/unit",
     "cy:web": "npx cypress open",
     "cy:headless": "npx cypress run",
-    "test:e2e": "npx cross-env WEB_SERVER_URL=http://localhost:3300 npx concurrently \"npm run api\" \"npm run web:test:env\" \"npm run cy:headless\"",
-    "test:e2e:web": "npx cross-env WEB_SERVER_URL=http://localhost:3300 npx concurrently \"npm run api\" \"npm run web:test:env\" \"npm run cy:web\""
+    "test:e2e:web:open": "npx cross-env WEB_SERVER_URL=http://localhost:3300 npx concurrently \"npm run api\" \"npm run web:test:env\" \"npm run cy:web\"",
+    "test:e2e:web": "npx cross-env WEB_SERVER_URL=http://localhost:3300 npx concurrently \"npm run api\" \"npm run web:test:env\" \"npm run cy:headless\"",
+    "test:e2e:cli": "cross-env NODE_OPTIONS=--experimental-vm-modules npx concurrently \"npm run api\" \"npx jest test/e2e\""
   },
   "keywords": [],
   "author": "",
@@ -34,8 +36,16 @@
   "devDependencies": {
     "@badeball/cypress-cucumber-preprocessor": "^19.2.0",
     "@bahmutov/cypress-esbuild-preprocessor": "^2.2.0",
+    "@testing-library/jest-dom": "^6.4.2",
+    "ansi-parser": "^3.2.10",
+    "ansi-regex": "^6.0.1",
     "browser-sync": "^2.29.3",
+    "concat-stream": "^2.0.0",
     "concurrently": "^8.2.2",
-    "cypress": "^13.6.6"
+    "cypress": "^13.6.6",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
+    "jest-image-snapshot": "^6.4.0",
+    "mock-stdin": "^1.0.0"
   }
 }

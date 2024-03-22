@@ -8,6 +8,9 @@
 
 # testing
 /coverage
+/**/coverage
+*.info
+/app/cypress/downloads
 
 # log
 *.log
@@ -21,6 +24,7 @@
 .env.development.local
 .env.test.local
 .env.production.local
+db_test.*
 
 npm-debug.log*
 yarn-debug.log*

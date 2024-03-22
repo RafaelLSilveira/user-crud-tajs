@@ -11,7 +11,6 @@ export default class FetchResponseDataBuilder {
         body: generateReadableData(
             `{"id":1,"name":"Mrs. Misty Rempel-Lehner","age":8,"email":"Monique.Leffler@yahoo.com","phone":"(551) 801-5964","vehicle":"Land Cruiser"}\n`
         )
-
     }
 
     static aResponse() {
@@ -45,6 +44,22 @@ export default class FetchResponseDataBuilder {
             ...this.#responseData,
             body: generateReadableData('{"id":1,"name":')
 
+        }
+
+        return this
+    }
+
+    withSearch() {
+        const data = [
+            {"id":1,"name":"Mrs. Misty Rempel-Lehner","age":8,"email":"Monique.Leffler@yahoo.com","phone":"(551) 801-5964","vehicle":"Land Cruiser"},
+            {"id":2,"name":"John Doe","age":18,"email":"john-doe@yahoo.com","phone":"(551) 801-5964","vehicle":"Land Cruiser"},
+            {"id":3,"name":"Mary Jane","age":8,"email":"Monique.Leffler@yahoo.com","phone":"(551) 801-5964","vehicle":"Land Cruiser"},
+            {"id":4,"name":"Bruce Wayne","age":8,"email":"Monique.Leffler@yahoo.com","phone":"(551) 801-5964","vehicle":"Land Cruiser"}
+        ]
+
+        this.#responseData = {
+            ...this.#responseData,
+            body: generateReadableData(data)
         }
 
         return this
