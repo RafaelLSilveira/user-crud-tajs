@@ -44,7 +44,7 @@ npm run test:watch
 
 - [x] - Adicionar banco de dados para API
 - [x] - Testes e2e para toda a UI na Web
-- [] - Testes e2e para toda a UI na CLI
+- [x] - Testes e2e para toda a UI na CLI
 - [x] - Testes e2e para toda a API
 - [] - Testes unitários com 100% de code coverage
 

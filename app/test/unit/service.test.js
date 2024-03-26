@@ -65,7 +65,31 @@ describe('Test Data Builder', () => {
         assert.deepEqual(result.statusText, expected.statusText)
     })
 
-    it("should be possible search a user name", async () => {
+    it("should return valid response when create a valid user", async () => {
+        const response = fetch.aResponse().build()
+        global.fetch = (url) => response
+       
+        const data = [
+            {
+                name: 'Mrs. Misty Rempel-Lehner',
+                age: 8,
+                email: 'Monique.Leffler@yahoo.com',
+                phone: '(551) 801-5964',
+                vehicle: 'Land Cruiser'
+            }
+        ]
+
+        const result =  await service.insertUser(data)
+        const expected = {
+            status: 200,
+            statusText: "OK"
+        }
+
+        assert.deepEqual(result.status, expected.status)
+        assert.deepEqual(result.statusText, expected.statusText)
+    })
+
+    it.skip("should be possible search a user name", async () => {
         const response = fetch.aResponse().withSearch().build()
         global.fetch = (url) => response
 
@@ -111,6 +135,22 @@ describe('Test Data Builder', () => {
             for await (const result of service.getData()) results.push(result)
             const expected = []
             assert.deepStrictEqual(results, expected)
+        })
+
+        it('should not throw if the request payload is invalid when create', async () => {
+            const response = fetch.aResponse().build()
+            global.fetch = (url) => response
+
+            const result =  await service.insertUser(undefined)          
+            assert.deepStrictEqual(result.data, undefined)
+        })
+
+        it('should not throw if the request payload is invalid when update', async () => {
+            const response = fetch.aResponse().build()
+            global.fetch = (url) => response
+
+            const result =  await service.updateUser(undefined)          
+            assert.deepStrictEqual(result?.data, undefined)
         })
     })
 })

@@ -1,4 +1,4 @@
-import { Readable } from 'node:stream'
+import { Readable } from 'node:stream';
 const generateReadableData = (data) => {
     return Readable.toWeb(Readable.from(data)).pipeThrough(new TextEncoderStream())
 }
@@ -59,7 +59,7 @@ export default class FetchResponseDataBuilder {
 
         this.#responseData = {
             ...this.#responseData,
-            body: generateReadableData(data)
+            body: generateReadableData([JSON.stringify(data)])
         }
 
         return this

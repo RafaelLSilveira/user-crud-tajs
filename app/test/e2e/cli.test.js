@@ -27,10 +27,6 @@ describe("#App CLI", () => {
     stdin.restore()
   });
 
-  // afterAll(() => {
-  //   api.kill()
-  // })
-
   it("should be loading app in mode cli without problems", async () => {    
     await new Promise((resolve) => setTimeout(resolve, 1000))
     expect(view.getTableSnapshot()).toMatchSnapshot();

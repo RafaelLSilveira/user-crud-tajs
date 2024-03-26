@@ -10,7 +10,7 @@
     "api": "npm --prefix ../api run start:test",
     "test": "node --test test/unit",
     "test:e2e": "cross-env NODE_OPTIONS=\"$NODE_OPTIONS --experimental-vm-modules\"  npx jest --runInBand test/e2e",
-    "test:watch": "node --watch --test test/unit",
+    "test:watch": "node --watch --experimental-vm-modules --test test/unit",
     "test:debug": "node --experimental-vm-modules --inspect-brk node_modules/.bin/jest --runInBand --watchAll test/unit",
     "test:coverage": "node --test --experimental-test-coverage --test-reporter=lcov --test-reporter-destination=lcov.info test/unit",
     "cy:web": "npx cypress open",
@@ -36,16 +36,18 @@
   "devDependencies": {
     "@badeball/cypress-cucumber-preprocessor": "^19.2.0",
     "@bahmutov/cypress-esbuild-preprocessor": "^2.2.0",
-    "@testing-library/jest-dom": "^6.4.2",
+    "@testing-library/dom": "^9.3.4",
     "ansi-parser": "^3.2.10",
     "ansi-regex": "^6.0.1",
     "browser-sync": "^2.29.3",
     "concat-stream": "^2.0.0",
     "concurrently": "^8.2.2",
     "cypress": "^13.6.6",
+    "global-jsdom": "^24.0.0",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
     "jest-image-snapshot": "^6.4.0",
+    "jsdom": "^24.0.0",
     "mock-stdin": "^1.0.0"
   }
 }
