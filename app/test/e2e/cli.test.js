@@ -1,4 +1,4 @@
-import { describe, it } from '@jest/globals'
+import { beforeEach, describe, it } from '@jest/globals'
 import MockStdin from 'mock-stdin'
 import View from '../../platforms/console/view.js'
 import Controller from "../../shared/controller.js"
@@ -9,12 +9,6 @@ describe("#App CLI", () => {
   let service
   let stdin
   let controller
-  // let api 
-
-  // beforeAll(async () => {
-  //   api = spawn(/^win/.test(process.platform) ? 'npm.cmd' : 'npm', ["run", "api"])
-  //   await new Promise((resolve) => setTimeout(resolve, 1000))
-  // })
 
   beforeEach(async () => {
     view = new View()

@@ -52,6 +52,8 @@ export async function initializeDb() {
     )
   `);
 
+  db.close();
+
   if(isTEST) {
     const user = {
       "name": "Peter Parker",

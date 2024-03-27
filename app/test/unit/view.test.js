@@ -63,9 +63,13 @@ describe("<View />", () => {
     searchMock = mock.fn()
     clearMock = mock.fn()
     removeMock = mock.fn()
-    createMock = mock.fn()
+    createMock = mock.fn(() => ({ status: 200 }))
     updateMock = mock.fn()
-    getByIdMock = mock.fn()
+    getByIdMock = mock.fn(() => ({
+      then: (func) => func({ 
+          "id":1,"name":"Mrs. Misty Rempel-Lehner","age":8,"email":"Monique.Leffler@yahoo.com","phone":"(551) 801-5964","vehicle":"Land Cruiser"
+      })
+    }))
 
     view = new View()
     view.configureOnSearchClick(searchMock)
@@ -82,11 +86,9 @@ describe("<View />", () => {
     mock.restoreAll()
   })
 
-  it("should be possible render view web without problem", async () => {    
+  it("should be possible render view web without problem", () => {    
     //console.log( prettyDOM(document.body))
-    // console.log("\n")
-    // console.log(prettyDOM(getByText(document.body, "Mrs. Misty Rempel-Lehner")))
-
+    
     const filterInput = document.getElementById("filter")
     const btnSearch = document.getElementById("btnSearch")
     const btnClear = document.getElementById("btnClear")
@@ -109,35 +111,146 @@ describe("<View />", () => {
     assert.strictEqual(!!getByText(document.body, "Land Cruiser"), true)
   })
 
-  it("should be possible search an user", async () => {
+  it("should be possible search an user", () => {
     assert.strictEqual(searchMock.mock.calls.length, 0)
 
     const filterInput = document.getElementById("filter")
-    await fireEvent.change(filterInput, { target: { value: "John" } })
+    fireEvent.change(filterInput, { target: { value: "John" } })
 
     const btnSearch = document.getElementById("btnSearch")
-    await fireEvent.click(btnSearch)
+    fireEvent.click(btnSearch)
    
     assert.strictEqual(searchMock.mock.calls[0].arguments[0], "John")
     assert.strictEqual(searchMock.mock.calls.length, 1)
   })
 
-  it("should be possible clear filter input when search an user", async () => {
+  it("should be possible clear filter input when search an user", () => {
     assert.strictEqual(searchMock.mock.calls.length, 0)
 
     const filterInput = document.getElementById("filter")
-    await fireEvent.change(filterInput, { target: { value: "John" } })
+    fireEvent.change(filterInput, { target: { value: "John" } })
 
     const btnSearch = document.getElementById("btnSearch")
-    await fireEvent.click(btnSearch)
+    fireEvent.click(btnSearch)
    
     assert.strictEqual(searchMock.mock.calls[0].arguments[0], "John")
     assert.strictEqual(searchMock.mock.calls.length, 1)
 
     const btnClear = document.getElementById("btnClear")
-    await fireEvent.click(btnClear)
+    fireEvent.click(btnClear)
 
     assert.strictEqual(clearMock.mock.calls[0].arguments[0], undefined)
     assert.strictEqual(clearMock.mock.calls.length, 1)
+  })
+
+  it("should be possible remove an user", () => {
+    assert.strictEqual(searchMock.mock.calls.length, 0)
+
+    const btnRemove = document.getElementById("btnRemove")
+    fireEvent.click(btnRemove)
+   
+    assert.strictEqual(removeMock.mock.calls[0].arguments[0], "1")
+    assert.strictEqual(removeMock.mock.calls.length, 1)
+  })
+
+  it("should be possible create an user", async () => {
+    const btnNewUser = document.getElementById("btnNewUser")
+    fireEvent.click(btnNewUser)
+    
+    const modalCreateUpdate = document.getElementById("create-modal-overlay")
+    const btnCancel = document.getElementById("btnCancel")
+
+    assert.strictEqual(modalCreateUpdate.className, "")
+    
+    fireEvent.click(btnCancel)
+    assert.strictEqual(modalCreateUpdate.className, "d-none")
+
+    fireEvent.click(btnNewUser)
+
+    const newNameInput = document.getElementById("new-name")
+    const newAgeInput = document.getElementById("new-age")
+    const newEmailInput = document.getElementById("new-email")
+    const newPhoneInput = document.getElementById("new-phone")
+    const newVehicleInput = document.getElementById("new-vehicle")
+
+    fireEvent.change(newNameInput, { target: { value: "Mark Silvester" }})
+    assert.strictEqual(newNameInput.value, "Mark Silvester")
+
+    fireEvent.change(newAgeInput, { target: { value: 20 }})
+    assert.strictEqual(newAgeInput.value, "20")
+    
+    fireEvent.change(newEmailInput, { target: { value: "mark@bol.com" }})
+    assert.strictEqual(newEmailInput.value, "mark@bol.com")
+
+    fireEvent.change(newPhoneInput, { target: { value: "(55) 99999-9999" }})
+    assert.strictEqual(newPhoneInput.value, "(55) 99999-9999")
+
+    fireEvent.change(newVehicleInput, { target: { value: "Opala" }})
+    assert.strictEqual(newVehicleInput.value, "Opala")
+
+    const btnSubmit = document.getElementById("btnSubmit")
+    fireEvent.click(btnSubmit)
+    
+    assert.strictEqual(createMock.mock.calls.length, 1)
+    assert.deepStrictEqual(createMock.mock.calls[0].arguments[0], { 
+      name: 'Mark Silvester', 
+      age: '20', 
+      email: 'mark@bol.com',
+      phone: '(55) 99999-9999',
+      vehicle: 'Opala'
+    })
+  })
+
+  it("should be possible update an user", async () => {
+
+    const modalCreateUpdate = document.getElementById("create-modal-overlay")
+    const btnCancel = document.getElementById("btnCancel")
+    const btnEdit = document.getElementById("btnEdit")
+
+    fireEvent.click(btnEdit)
+
+    assert.strictEqual(getByIdMock.mock.calls.length, 1)
+    assert.strictEqual(getByIdMock.mock.calls[0].arguments[0], "1")
+    assert.strictEqual(modalCreateUpdate.className, "")
+    
+    fireEvent.click(btnCancel)
+
+    assert.strictEqual(modalCreateUpdate.className, "d-none")
+
+    fireEvent.click(btnEdit)
+
+    assert.strictEqual(getByIdMock.mock.calls.length, 2)
+    assert.strictEqual(getByIdMock.mock.calls[1].arguments[0], "1")
+
+    const newNameInput = document.getElementById("new-name")
+    const newAgeInput = document.getElementById("new-age")
+    const newEmailInput = document.getElementById("new-email")
+    const newPhoneInput = document.getElementById("new-phone")
+    const newVehicleInput = document.getElementById("new-vehicle")
+    const userId = document.getElementById("user-id")
+
+    assert.strictEqual(modalCreateUpdate.className, "")
+    assert.strictEqual(userId.value, "1")
+    assert.strictEqual(newNameInput.value, "Mrs. Misty Rempel-Lehner")
+    assert.strictEqual(newAgeInput.value, "8")
+    assert.strictEqual(newEmailInput.value, "Monique.Leffler@yahoo.com")
+    assert.strictEqual(newPhoneInput.value, "(551) 801-5964")
+    assert.strictEqual(newVehicleInput.value, "Land Cruiser")
+
+    fireEvent.change(newNameInput, { target: { value: "M. Rempel-Lehner" }})
+    assert.strictEqual(newNameInput.value, "M. Rempel-Lehner")
+
+    const btnSubmit = document.getElementById("btnSubmit")
+    fireEvent.click(btnSubmit)
+
+    assert.strictEqual(updateMock.mock.calls.length, 1)
+    assert.deepEqual(updateMock.mock.calls[0].arguments[0],  {
+      age: '8',
+      email: 'Monique.Leffler@yahoo.com',
+      id: '1',
+      name: 'M. Rempel-Lehner',
+      phone: '(551) 801-5964',
+      vehicle: 'Land Cruiser'
+    })
   })
 })

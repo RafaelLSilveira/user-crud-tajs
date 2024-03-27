@@ -16,8 +16,7 @@
     "cy:web": "npx cypress open",
     "cy:headless": "npx cypress run",
     "test:e2e:web:open": "npx cross-env WEB_SERVER_URL=http://localhost:3300 npx concurrently \"npm run api\" \"npm run web:test:env\" \"npm run cy:web\"",
-    "test:e2e:web": "npx cross-env WEB_SERVER_URL=http://localhost:3300 npx concurrently \"npm run api\" \"npm run web:test:env\" \"npm run cy:headless\"",
-    "test:e2e:cli": "cross-env NODE_OPTIONS=--experimental-vm-modules npx concurrently \"npm run api\" \"npx jest test/e2e\""
+    "test:e2e:web": "npx cross-env WEB_SERVER_URL=http://localhost:3300 npx concurrently \"npm run api\" \"npm run web:test:env\" \"npm run cy:headless\""
   },
   "keywords": [],
   "author": "",

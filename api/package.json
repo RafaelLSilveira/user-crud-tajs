@@ -14,7 +14,8 @@
   "scripts": {
     "start": "node --experimental-vm-modules --watch api.js",
     "start:test": "npx cross-env isTEST=true node --experimental-vm-modules api.js",
-    "test:e2e": "node --test --experimental-vm-modules --watch test/e2e"
+    "test:e2e": "node --test --experimental-vm-modules test/e2e",
+    "test:e2e:watch": "node --test --experimental-vm-modules --watch test/e2e"
   },
   "keywords": [],
   "author": "",

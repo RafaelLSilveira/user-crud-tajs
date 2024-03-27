@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`#App CLI should be loading app in mode cli without problems 1`] = `
+"
+id                  name                           age                                                                 
+                                                                                                                       
+ 1                   Peter Parker                   20                                                                 
+ 2                   Bruce Wayne                    30                                                                 
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+  s:search    d:delete    escape:quit ─────────────────────────────────────────────────────────────────────────────────
+"
+`;
+
+exports[`#App CLI should be possible search an user 1`] = `
+"
+id                  name                           age                                                                 
+                                                                                                                       
+ 2                   Bruce Wayne                    30                                                                 
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+  s:search    d:delete    escape:quit ─────────────────────────────────────────────────────────────────────────────────
+"
+`;
