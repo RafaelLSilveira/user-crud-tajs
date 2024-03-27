@@ -14,10 +14,9 @@ jobs:
         with:
           node-version: '20.x'
       - name: Unit Test APP 
-        run:
-          cd app
-          npm ci
-          npm test
+        run: cd app
+      - run: npm ci
+      - run: npm test
       # - name: Test e2e APP Cypress 
       #   run: npm run test:e2e:web
       # - name: Test e2e API
