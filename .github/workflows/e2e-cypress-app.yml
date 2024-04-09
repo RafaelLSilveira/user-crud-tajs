@@ -33,3 +33,4 @@ jobs:
     - name: Running e2e cypress   
       run: npm ci
     - run: npm run test:e2e:web
+    - run: echo "Terminouuuu"
