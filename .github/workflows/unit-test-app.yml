@@ -5,8 +5,8 @@ name: Unit tests app
 
 on:
   push:
-    paths:
-      - 'app/**'
+    branches: [ "main" ]
+    
   pull_request:
     branches: [ "main" ]
 
