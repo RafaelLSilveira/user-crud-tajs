@@ -4,10 +4,9 @@
 name: e2e tests cypress app
 
 on:
-  push:
-    branches: [ "main" ]
   pull_request:
-    branches: [ "main" ]
+    paths:
+      - 'app/**'
 
 jobs:
   build:
