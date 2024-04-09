@@ -4,9 +4,11 @@
 name: Unit tests app 
 
 on:
-  pull_request:
+  push:
     paths:
       - 'app/**'
+  pull_request:
+    branches: [ "main" ]
 
 jobs:
   build:
