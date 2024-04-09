@@ -31,9 +31,7 @@ jobs:
     - name: Prepare api to tests
       run: npm --prefix ../api ci
     - run: npm run api &
-    - run: echo "show de bola!"  
-    # - name: Running e2e cypress   
-    #   run: npm ci
-    # - run: npm run test:e2e:web
-    # - run: gh run cancel ${{ github.run_id }}
-    # - run: exit 1
+    - run: npm ci
+    - run: npm run web:test:env &
+    - name: Running e2e cypress   
+      run: npx cross-env WEB_SERVER_URL=http://localhost:3300 npm run cy:headless
