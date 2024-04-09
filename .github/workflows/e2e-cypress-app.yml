@@ -29,6 +29,10 @@ jobs:
         cache-dependency-path: '**/package-lock.json'
     - name: Prepare api to tests
       run: npm --prefix ../api ci
+    - run: npm run api
+    - run: npm ci  
+    - run: npm run web:test:env"
+
   test:
     needs: pre-test
     runs-on: ubuntu-latest
@@ -49,4 +53,4 @@ jobs:
         cache-dependency-path: '**/package-lock.json'
     - name: Running e2e cypress   
       run: npm ci
-    - run: npm run test:e2e:web
+    - run: npm run cy:headless --watch false
