@@ -30,7 +30,7 @@ jobs:
         cache-dependency-path: '**/package-lock.json'
     - name: Prepare api to tests
       run: npm --prefix ../api ci
-    - run: npm run ci
+    - run: npm run api
     - run: echo "show de bola!"  
     # - name: Running e2e cypress   
     #   run: npm ci
