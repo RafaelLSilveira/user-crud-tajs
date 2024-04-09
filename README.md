@@ -54,4 +54,4 @@ npm run test:watch
 - [x] - Adicionar funcionalidade para edição de pessoa
 - [x] - Adicionar funcionalidade para atualização de pessoa
 - [x] - Adicionar funcionalidade para remoção de pessoa
-- [] - Colocar testes para rodar em GitHub Actions
+- [x] - Colocar testes para rodar em GitHub Actions
