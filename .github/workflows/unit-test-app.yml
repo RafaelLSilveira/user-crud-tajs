@@ -5,10 +5,12 @@ name: Unit tests app
 
 on:
   push:
-    branches: [ "main" ]
-    
-  pull_request:
-    branches: [ "main" ]
+    branches-ignore:
+      - staging
+      - launchpad
+      - production
+      - main
+      - default
 
 jobs:
   build:
@@ -22,6 +24,8 @@ jobs:
         node-version: [20.x]
 
     steps:
+    - name: pull-request-action
+      uses: vsoch/pull-request-action@master
     - uses: actions/checkout@v3
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
