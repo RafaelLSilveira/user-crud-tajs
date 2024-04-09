@@ -15,7 +15,7 @@ describe('Test Data Builder', () => {
         const expected = [
             {
                 id: 1,
-                name: 'Mrs. Misty Rempel-Lehner2',
+                name: 'Mrs. Misty Rempel-Lehner',
                 age: 8,
                 email: 'Monique.Leffler@yahoo.com',
                 phone: '(551) 801-5964',
