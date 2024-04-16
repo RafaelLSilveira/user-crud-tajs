@@ -29,8 +29,5 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
         cache-dependency-path: '**/package-lock.json'  
-    - name: Prepare api to tests
-      run: npm ci
-    - run: npm run start:test &
     - name: Running API e2e   
       run: npm run test:e2e
