@@ -36,6 +36,8 @@ jobs:
       run: npm --prefix ../api ci
     - run: npm run api &
     - run: npm ci
+    - name: Running CLI e2e
+      run: npm run teste:2e2
     - run: npm run web:test:env &
-    - name: Running e2e cypress   
+    - name: Running WEB e2e   
       run: npx cross-env WEB_SERVER_URL=http://localhost:3300 npm run cy:headless
