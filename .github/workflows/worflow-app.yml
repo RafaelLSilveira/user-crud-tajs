@@ -29,6 +29,9 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
         cache-dependency-path: '**/package-lock.json'
+    - name: Running App Unit Test
+      run: npm ci
+    - run: npm test    
     - name: Prepare api to tests
       run: npm --prefix ../api ci
     - run: npm run api &
